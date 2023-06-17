@@ -1,0 +1,79 @@
+﻿@using RegistroUsuarios.Models
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model IEnumerable<RegistroUsuarios.Models.Palindromo>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Palíndromos</h1>
+
+<p>
+    @using (Html.BeginForm("EncontrarPalindromos", "Palindromo", FormMethod.Post, new {@class = "form-inline"}))
+    {
+        <div>
+            <label>Texto:</label>
+            <input type="text" name="Texto" />
+            <button type="submit">Buscar</button>
+        </div>
+    }
+</p>
+
+@if (ViewBag.Buscado == true)
+{
+    <h3>Palindromos Encontrados: @ViewBag.NumPalindromos</h3>
+
+    if (Model != null && Model.Any())
+    {
+        <h3>Palíndromos:</h3>
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>@item.Texto</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No se encontraron palíndromos</p>
+    }
+}
+
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Texto</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Texto</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Texto">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.Texto">Detalles</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Texto">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">No se encontraron registros</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
