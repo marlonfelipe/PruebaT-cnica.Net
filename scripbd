@@ -1,0 +1,81 @@
+USE [DBTEST]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 16/06/2023 19:23:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Empleado]    Script Date: 16/06/2023 19:23:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Empleado](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[DPI] [varchar](20) NOT NULL,
+	[NombreCompleto] [varchar](100) NOT NULL,
+	[CantidadHijos] [int] NULL,
+	[SalarioBase] [decimal](18, 2) NULL,
+	[BonoDecreto] [decimal](18, 2) NULL,
+	[Usuario] [varchar](50) NULL,
+	[FechaCreacion] [datetime] NOT NULL,
+	[BonoPaternidad] [decimal](18, 2) NULL,
+	[Igss] [decimal](18, 2) NULL,
+	[Irtra] [decimal](18, 2) NULL,
+	[SalarioLiquido] [decimal](18, 2) NULL,
+	[SalarioTotal] [decimal](18, 2) NULL,
+ CONSTRAINT [PK_Empleado] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Palindromo]    Script Date: 16/06/2023 19:23:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Palindromo](
+	[Texto] [nvarchar](450) NOT NULL,
+	[CantidadPalindromos] [int] NOT NULL,
+	[PalindromoTexto] [nvarchar](450) NULL,
+ CONSTRAINT [PK_Palindromo] PRIMARY KEY CLUSTERED 
+(
+	[Texto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[USUARIO]    Script Date: 16/06/2023 19:23:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[USUARIO](
+	[IdUsuario] [int] IDENTITY(1,1) NOT NULL,
+	[NombreUsuario] [varchar](50) NULL,
+	[Correo] [varchar](50) NULL,
+	[Clave] [varchar](100) NULL,
+ CONSTRAINT [PK__USUARIO__5B65BF977B5B8FC4] PRIMARY KEY CLUSTERED 
+(
+	[IdUsuario] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Empleado] ADD  DEFAULT (getdate()) FOR [FechaCreacion]
+GO
+ALTER TABLE [dbo].[Palindromo] ADD  DEFAULT ((0)) FOR [CantidadPalindromos]
+GO
+ALTER TABLE [dbo].[Palindromo]  WITH CHECK ADD  CONSTRAINT [FK_Palindromo_Palindromo_PalindromoTexto] FOREIGN KEY([PalindromoTexto])
+REFERENCES [dbo].[Palindromo] ([Texto])
+GO
+ALTER TABLE [dbo].[Palindromo] CHECK CONSTRAINT [FK_Palindromo_Palindromo_PalindromoTexto]
+GO
